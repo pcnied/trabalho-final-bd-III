@@ -26,14 +26,14 @@ routerAnotation.get("/:id", verifyUserExist, GetAnotationController.execute);
 
 // ROTA PARA DELETAR ANOTAÇÃO
 routerAnotation.delete(
-  "/:id",
+  "/:anotationId",
   verifyUserExist,
   DeleteAnotationController.execute
 );
 
 // ROTA PARA ATUALIZAÇÃO ANOTAÇÃO
 routerAnotation.put(
-  "/:id",
+  "/:anotationId",
   verifyUserExist,
   verifyUpdateAnotation,
   UpdateAnotationController.execute

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteAnotationUseCase } from "../../usecase";
+import { DeleteAnotationUseCase } from "../usecases";
 
 export class DeleteAnotationController {
   public static async execute(req: Request, res: Response) {

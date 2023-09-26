@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateAnotationUseCase } from "../../usecase";
+import { CreateAnotationUseCase } from "../usecases";
 
 export class CreateAnotationController {
   public static async execute(req: Request, res: Response) {

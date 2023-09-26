@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { GetAnotationByIdUseCase } from "../../usecase";
+import { GetAnotationByIdUseCase } from "../usecases";
 
 export class GetAnotationController {
   public static async execute(req: Request, res: Response) {

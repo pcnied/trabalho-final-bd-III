@@ -1,7 +1,7 @@
 import { FindOptionsWhere } from "typeorm";
 import { DatabaseConnection } from "../../../../main/database";
 import { Anotation } from "../../../models/anotation";
-import { AnotationEntity } from "../../../shared/database/entities/anotation.entity";
+import { AnotationEntity } from "../../../shared/database/entities";
 
 type CreateRequestDTO = {
   userId: string;
