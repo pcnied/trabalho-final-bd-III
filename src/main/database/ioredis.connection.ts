@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { redis } from "../config/cache.config";
+import { redis } from "../config";
 
 export class RedisConnection {
   private static _connection: Redis;
