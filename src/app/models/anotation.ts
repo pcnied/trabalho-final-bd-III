@@ -1,5 +1,14 @@
 import { BaseClass } from "./baseClass";
 
+type AnotationJSON = {
+  userId: string;
+  id: string;
+  title: string;
+  description: string;
+  createdAt: Date;
+  archived: boolean;
+};
+
 export class Anotation extends BaseClass {
   private _userId: string;
   private _title: string;
@@ -47,27 +56,14 @@ export class Anotation extends BaseClass {
     return this._archived;
   }
 
-  set userId(userId: string) {
-    this._userId = userId;
-  }
-
-  set id(id: string) {
-    this._id = id;
-  }
-
-  set title(title: string) {
-    this._title = title;
-  }
-
-  set description(description: string) {
-    this._description = description;
-  }
-
-  set createdAt(createdAt: Date) {
-    this._createdAt = createdAt;
-  }
-
-  set archived(archived: boolean) {
-    this._archived = archived;
+  public toJSON(): AnotationJSON {
+    return {
+      userId: this._userId,
+      id: this._id,
+      title: this._title,
+      description: this._description,
+      createdAt: this._createdAt,
+      archived: this._archived,
+    };
   }
 }

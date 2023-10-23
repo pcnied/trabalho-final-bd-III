@@ -9,7 +9,7 @@ export type LoginUserDTO = {
 type ResponseLoginUser = {
   success: boolean;
   message: string;
-  id?: UserJSON;
+  data?: UserJSON;
 };
 
 export class LoginUser {
@@ -28,7 +28,7 @@ export class LoginUser {
     return {
       success: true,
       message: "Login efetuado com sucesso!",
-      id: searchUser,
+      data: searchUser,
     };
   }
 }

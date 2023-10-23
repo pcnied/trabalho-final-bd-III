@@ -1,4 +1,4 @@
-import { FindOptionsWhere } from "typeorm";
+import { FindOptionsWhere, ILike } from "typeorm";
 import { DatabaseConnection } from "../../../../main/database";
 import { Anotation } from "../../../models/anotation";
 import { AnotationEntity } from "../../../shared/database/entities";
@@ -76,7 +76,7 @@ export class AnotationRepository {
     const filters: FindOptionsWhere<AnotationEntity> = { userId };
 
     if (title) {
-      filters.title = title;
+      filters.title = ILike(`%${title}%`);
     }
 
     if (archived != undefined) {
