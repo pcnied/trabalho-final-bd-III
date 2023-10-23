@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { usersRepository } from "../../../../routes";
+import { UserRepository } from "../../Users/repository";
 
 export async function verifyUserExist(
   req: Request,
@@ -7,6 +7,8 @@ export async function verifyUserExist(
   next: NextFunction
 ) {
   const { userId } = req.params;
+
+  const usersRepository = new UserRepository();
 
   const user = await usersRepository.getById(userId);
 

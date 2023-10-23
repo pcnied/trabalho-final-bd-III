@@ -1,8 +1,8 @@
 import { appEnvs } from "../app/envs";
 import { createServer } from "./config";
-import { DatabaseConnection } from "./database";
+import { DatabaseConnection, RedisConnection } from "./database";
 
-Promise.all([DatabaseConnection.connect()])
+Promise.all([DatabaseConnection.connect(), RedisConnection.connect()])
   .then(() => {
     // Executa aqui quando as promises de conexão forem resolvidas
     const app = createServer();
