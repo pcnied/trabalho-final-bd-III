@@ -17,12 +17,6 @@ type UpdateRequestDTO = {
   archived?: boolean;
 };
 
-type GetAllAnotationsDTO = {
-  userId: string;
-  title?: string;
-  archived?: boolean;
-};
-
 export class AnotationRepository {
   constructor(private _manager = DatabaseConnection.connection.manager) {}
 
@@ -68,11 +62,11 @@ export class AnotationRepository {
     return anotationFound ? this.entityToModel(anotationFound) : null;
   }
 
-  public async getAllAnotations({
-    userId,
-    title,
-    archived,
-  }: GetAllAnotationsDTO): Promise<Anotation[]> {
+  public async getAllAnotations(
+    userId: string,
+    title?: string,
+    archived?: boolean
+  ): Promise<Anotation[]> {
     const filters: FindOptionsWhere<AnotationEntity> = { userId };
 
     if (title) {

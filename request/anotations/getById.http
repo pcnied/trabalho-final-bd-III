@@ -1,0 +1,6 @@
+GET http://localhost:5555/users/USERID/anotations/ANOTATIONID HTTP/1.1
+content-type: application/json
+
+{
+   "idUsuario": "ddbe4da2-ad75-4f42-b95d-cc3f941865eb"
+}

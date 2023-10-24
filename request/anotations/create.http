@@ -1,0 +1,7 @@
+POST http://localhost:5555/users/IDUSER/anotations HTTP/1.1
+content-type: application/json
+
+{
+    "title": "",
+    "description": ""
+}

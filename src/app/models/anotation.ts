@@ -1,6 +1,6 @@
 import { BaseClass } from "./baseClass";
 
-type AnotationJSON = {
+export type AnotationJSON = {
   userId: string;
   id: string;
   title: string;

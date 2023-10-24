@@ -8,5 +8,5 @@ export function routesApp(app: Express) {
   });
 
   app.use("/users", routesUser);
-  app.use("/users/:userId/anotation", routesAnotation);
+  app.use("/users/:userId/anotations", routesAnotation);
 }

@@ -1,25 +1,52 @@
-import { Anotation } from "../../../models";
+import { AnotationJSON } from "../../../models";
+import { CacheRepository } from "../../../shared/database/repositories";
 import { AnotationRepository } from "../repository";
+
+type GetAllAnotationsDTO = {
+  userId: string;
+  title?: string;
+  archived?: boolean;
+};
 
 export type GetAllAnotationsResponseDTO = {
   message: string;
   success: boolean;
-  anotations: Anotation[];
+  anotations: AnotationJSON[];
 };
 
 export class GetAllAnotationsUseCase {
   public async execute(
-    userId: string,
-    archived: boolean,
-    title?: string
+    data: GetAllAnotationsDTO
   ): Promise<GetAllAnotationsResponseDTO> {
-    const anotationRepository = new AnotationRepository();
+    const { userId, title, archived } = data;
 
-    const anotations = await anotationRepository.getAllAnotations({
-      userId,
-      title,
-      archived,
-    });
+    const anotationRepository = new AnotationRepository();
+    const cacheRepository = new CacheRepository();
+
+    const anotationsCache = await cacheRepository.get<AnotationJSON[]>(
+      `anotations-user-${userId}`
+    );
+    let anotations: AnotationJSON[] = [];
+
+    if (!anotationsCache) {
+      const mainAnotations = await anotationRepository.getAllAnotations(userId);
+      anotations = mainAnotations.map((a) => a.toJSON());
+
+      await cacheRepository.set<AnotationJSON[]>(
+        `anotations-user-${userId}`,
+        anotations
+      );
+    } else {
+      anotations = anotationsCache;
+    }
+
+    if (title) {
+      anotations = anotations.filter((t) => t.title === title);
+    }
+
+    if (archived) {
+      anotations = anotations.filter((t) => t.archived === archived);
+    }
 
     return {
       message:

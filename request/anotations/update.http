@@ -1,0 +1,8 @@
+PUT http://localhost:5555/users/USERID/anotations/ANOTATIONID HTTP/1.1
+content-type: application/json
+
+{
+	"title": "Meu título atualizado",
+	"description": "Minha descrição atualizada",
+	"archived": false
+}	
