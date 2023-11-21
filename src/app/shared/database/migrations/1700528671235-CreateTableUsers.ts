@@ -1,16 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateTableAnotations1695682874445 implements MigrationInterface {
+export class CreateTableUsers1700528671235 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "anotations",
+        name: "users",
         columns: [
-          {
-            name: "user_id",
-            type: "uuid",
-            isNullable: false,
-          },
           {
             name: "id",
             type: "uuid",
@@ -19,21 +14,22 @@ export class CreateTableAnotations1695682874445 implements MigrationInterface {
             default: "uuid_generate_v4()",
           },
           {
-            name: "title",
+            name: "name",
+            type: "varchar",
+            isNullable: false,
+          },
+          {
+            name: "email",
             type: "varchar",
             length: "50",
+            isUnique: true,
             isNullable: false,
           },
           {
-            name: "description",
-            type: "text",
+            name: "password",
+            type: "varchar",
+            length: "255",
             isNullable: false,
-          },
-          {
-            name: "archived",
-            type: "boolean",
-            isNullable: false,
-            default: false,
           },
           {
             name: "created_at",
@@ -42,18 +38,11 @@ export class CreateTableAnotations1695682874445 implements MigrationInterface {
             default: "now()",
           },
         ],
-        foreignKeys: [
-          {
-            columnNames: ["user_id"],
-            referencedTableName: "users",
-            referencedColumnNames: ["id"],
-          },
-        ],
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("anotations", true, true, true);
+    await queryRunner.dropTable("users", true, true, true);
   }
 }

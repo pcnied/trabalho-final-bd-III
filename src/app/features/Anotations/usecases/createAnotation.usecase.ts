@@ -1,4 +1,5 @@
 import { Anotation } from "../../../models/anotation";
+import { CacheRepository } from "../../../shared/database/repositories";
 import { AnotationRepository } from "../repository";
 
 export type CreateAnotationRequestDTO = {
@@ -20,12 +21,15 @@ export class CreateAnotationUseCase {
     const { userId, title, description } = data;
 
     const anotationRepository = new AnotationRepository();
+    const cacheRepository = new CacheRepository();
 
     const newAnotation = await anotationRepository.createAnotation({
       userId,
       title,
       description,
     });
+    await cacheRepository.delete(`anotations-user-${userId}`);
+    await cacheRepository.delete(`anotations-${newAnotation.toJSON().id}`);
 
     return {
       message: "Anotação criada com sucesso!",

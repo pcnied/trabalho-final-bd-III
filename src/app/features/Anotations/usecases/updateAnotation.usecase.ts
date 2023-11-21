@@ -1,4 +1,5 @@
 import { Anotation } from "../../../models";
+import { CacheRepository } from "../../../shared/database/repositories";
 import { AnotationRepository } from "../repository";
 
 export type UpdateAnotationRequestDTO = {
@@ -22,6 +23,7 @@ export class UpdateAnotationUseCase {
     const { userId, anotationId, title, description, archived } = data;
 
     const anotationRepository = new AnotationRepository();
+    const cacheRepository = new CacheRepository();
 
     const anotationFound = await anotationRepository.getAnotationById(
       anotationId
@@ -40,6 +42,8 @@ export class UpdateAnotationUseCase {
       description: description ? description : anotationFound.description,
       archived: archived != undefined ? archived : anotationFound.archived,
     });
+    await cacheRepository.delete(`anotations-user-${userId}`);
+    await cacheRepository.delete(`anotation-${anotationId}`);
 
     return {
       message: "Anotação atualizada com sucesso!",

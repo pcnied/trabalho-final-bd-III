@@ -14,8 +14,8 @@ export const typeorm = new DataSource({
   // database: process.env.DB_DATABASE,
   synchronize: false,
   logging: false,
-  entities: [`${basePath}/database/entities/**/*`],
-  migrations: [`${basePath}/database/migrations/**/*`],
+  entities: [`${basePath}/app/shared/database/entities/**/*`],
+  migrations: [`${basePath}/app/shared/database/migrations/**/*`],
   ssl: {
     rejectUnauthorized: false,
   },

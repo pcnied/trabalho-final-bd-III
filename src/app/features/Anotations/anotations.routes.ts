@@ -12,17 +12,25 @@ const routerAnotation = Router();
 
 // ROTA DE CRIAÇÃO DE ANOTAÇÃO
 routerAnotation.post(
-  "/",
+  "/:userId/anotations",
   verifyCreateAnotation,
   verifyUserExist,
   CreateAnotationController.execute
 );
 
 // ROTA PARA LISTAR TODAS AS ANOTAÇÕES
-routerAnotation.get("/", verifyUserExist, GetAllAnotationsController.execute);
+routerAnotation.get(
+  "/:userId/anotations",
+  verifyUserExist,
+  GetAllAnotationsController.execute
+);
 
 // ROTA PARA LISTAR ANOTAÇÃO ESPECÍFICA
-routerAnotation.get("/:id", verifyUserExist, GetAnotationController.execute);
+routerAnotation.get(
+  "/:id/anotation",
+  verifyUserExist,
+  GetAnotationController.execute
+);
 
 // ROTA PARA DELETAR ANOTAÇÃO
 routerAnotation.delete(

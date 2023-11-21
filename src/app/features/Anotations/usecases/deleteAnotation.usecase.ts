@@ -1,4 +1,5 @@
 import { Anotation } from "../../../models";
+import { CacheRepository } from "../../../shared/database/repositories";
 import { AnotationRepository } from "../repository";
 
 type DeleteAnotationRequestDTO = {
@@ -17,7 +18,9 @@ export class DeleteAnotationUseCase {
     data: DeleteAnotationRequestDTO
   ): Promise<DeleteAnotationResponseDTO> {
     const { userId, anotationId } = data;
+
     const anotationRepository = new AnotationRepository();
+    const cacheRepository = new CacheRepository();
 
     const anotationFound = await anotationRepository.getAnotationById(
       anotationId
@@ -31,6 +34,8 @@ export class DeleteAnotationUseCase {
     }
 
     await anotationRepository.deleteAnotation(anotationId);
+    await cacheRepository.delete(`anotations-user-${userId}`);
+    await cacheRepository.delete(`anotation-${anotationId}`);
 
     return {
       message: "Anotação deletada com sucesso!",

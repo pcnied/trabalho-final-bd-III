@@ -9,11 +9,12 @@ export class GetAllAnotationsController {
 
     const getAllAnotationsUseCase = new GetAllAnotationsUseCase();
 
-    const response = await getAllAnotationsUseCase.execute(
+    const response = await getAllAnotationsUseCase.execute({
       userId,
-      archived !== undefined ? JSON.parse(archived as string) : undefined,
-      title ? String(title) : undefined
-    );
+      archived:
+        archived !== undefined ? JSON.parse(archived as string) : undefined,
+      title: title ? String(title) : undefined,
+    });
 
     if (!response.success) {
       return res.status(404).json(response);

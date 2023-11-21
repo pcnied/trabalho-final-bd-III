@@ -1,4 +1,5 @@
-import { Anotation } from "../../../models";
+import { Anotation, AnotationJSON } from "../../../models";
+import { CacheRepository } from "../../../shared/database/repositories";
 import { AnotationRepository } from "../repository";
 
 type GetAnotationRequestDTO = {
@@ -19,6 +20,7 @@ export class GetAnotationByIdUseCase {
     const { userId, anotationId } = data;
 
     const anotationRepository = new AnotationRepository();
+    const cacheRepository = new CacheRepository();
 
     const anotationFound = await anotationRepository.getAnotationById(
       anotationId
@@ -31,8 +33,34 @@ export class GetAnotationByIdUseCase {
       };
     }
 
+    const anotationCache = await cacheRepository.get<AnotationJSON>(
+      `anotation-${anotationId}`
+    );
+
+    if (!anotationCache) {
+      const anotation = await anotationRepository.getAnotationById(anotationId);
+
+      if (!anotation) {
+        return {
+          message: "Transação não encontrada.",
+          success: false,
+        };
+      }
+
+      await cacheRepository.set<AnotationJSON>(
+        `anotation-${anotationId}`,
+        anotation.toJSON()
+      );
+
+      return {
+        message: "Transação encontrada com sucesso",
+        success: true,
+        anotation,
+      };
+    }
+
     return {
-      message: "Anotação encontrada com sucesso!",
+      message: "Transação em cache encontrada com sucesso",
       success: true,
       anotation: anotationFound,
     };

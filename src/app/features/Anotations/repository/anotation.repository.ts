@@ -67,7 +67,11 @@ export class AnotationRepository {
     title?: string,
     archived?: boolean
   ): Promise<Anotation[]> {
-    const filters: FindOptionsWhere<AnotationEntity> = { userId };
+    const filters: FindOptionsWhere<AnotationEntity> = {
+      userId,
+      title,
+      archived,
+    };
 
     if (title) {
       filters.title = ILike(`%${title}%`);
@@ -84,10 +88,10 @@ export class AnotationRepository {
     return listAnotations.map((row) => this.entityToModel(row));
   }
 
-  async getAnotationById(idAnotation: string): Promise<Anotation | null> {
+  async getAnotationById(anotationId: string): Promise<Anotation | null> {
     const anotationFound = await this._manager.findOne(AnotationEntity, {
       where: {
-        id: idAnotation,
+        id: anotationId,
       },
     });
 
